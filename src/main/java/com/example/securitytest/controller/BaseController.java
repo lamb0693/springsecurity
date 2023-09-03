@@ -43,32 +43,50 @@ public class BaseController {
         return "loginForm";
     }
 
-    @GetMapping("/token")
+    @GetMapping("/token/token")
     @ResponseBody
     public String token(){
         return "token";
     }
 
-    @GetMapping("/createtoken")
+    @GetMapping("/token/createtoken1")
     @ResponseBody
     public String createToken() {
         String token = tokenService.createToken(1, "pjh");
         return token;
     }
 
-    @GetMapping("/idfromtoken")
+    @GetMapping("/token/createtoken10")
+    @ResponseBody
+    public String createToken10() {
+        String token = tokenService.createToken(10, "pjh");
+        return token;
+    }
+
+    @GetMapping("/token/idfromtoken")
     @ResponseBody
     public String idFromToken(){
-        String username = tokenService.getIdFromToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwamgiLCJleHAiOjE2OTM3MzI5ODB9.otKnGUQIERIYMdXPZB5y3nllharHypOYK89Xq80IKhs");
+        String username;
+        try{
+            username= tokenService.getIdFromToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwamgiLCJleHAiOjE2OTM3MzI5ODB9.otKnGUQIERIYMdXPZB5y3nllharHypOYK89Xq80IKhs");
+        } catch( Exception e ){
+            username = e.getMessage();
+        }
+
         return username;
     }
 
     @GetMapping("/validatetoken")
     @ResponseBody
     public String validateToken(){
-        Map<String, Object> claims =  tokenService.validate("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwamgiLCJleHAiOjE2OTM3MzI5ODB9.otKnGUQIERIYMdXPZB5y3nllharHypOYK89Xq80IKhs");
-        log.info(claims);
-        return claims.toString();
+        String msg;
+        try{
+            msg =  tokenService.validate("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwamgiLCJleHAiOjE2OTM3MzI5ODB9.otKnGUQIERIYMdXPZB5y3nllharHypOYK89Xq80IKhs");
+        } catch (Exception e){
+            msg= e.getMessage();
+        }
+        log.info(msg);
+        return msg;
     }
 
 }

@@ -63,9 +63,9 @@ public class SecurityConfig {
     @Order(1)
     SecurityFilterChain tokenFilterChain2(HttpSecurity http) throws Exception {
         log.info("####tokenFilterChain2");
-        http.securityMatcher(AntPathRequestMatcher.antMatcher("/token"));
+        http.securityMatcher(AntPathRequestMatcher.antMatcher("/token/**"));
         http.authorizeHttpRequests((request) -> {
-            request.requestMatchers("/token").authenticated();
+            request.requestMatchers("/token/**").authenticated();
         })
         .addFilterBefore(tokenCheckFilter(), UsernamePasswordAuthenticationFilter.class);
 

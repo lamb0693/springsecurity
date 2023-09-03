@@ -50,14 +50,15 @@ public class TokenService {
         return claims.getSubject();
     }
 
-    public Map<String, Object> validate(String token){
-        Map<String, Object> claims;
+    public String validate(String token) throws Exception{
+        String claims;
 
         claims = Jwts.parserBuilder()
                 .setSigningKey(DatatypeConverter.parseBase64Binary(SECRET_KEY))
                 .build()
                 .parseClaimsJws(token)
-                .getBody();
+                .getBody()
+                .getSubject();
 
         return claims;
     }
